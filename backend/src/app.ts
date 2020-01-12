@@ -5,9 +5,7 @@ class App {
     constructor() {
         this.express = express();
     }
-    public getApplication(): Application {
-        return this.express;
-    }
+    
     public bootstrap(PORT: number): void {
         this.express.listen(PORT);
     }
