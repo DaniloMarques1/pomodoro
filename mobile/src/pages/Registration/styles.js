@@ -3,7 +3,7 @@ import Colors from '../../styles/colors';
 
 export const Container = styled.ScrollView.attrs({
   contentContainerStyle: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
