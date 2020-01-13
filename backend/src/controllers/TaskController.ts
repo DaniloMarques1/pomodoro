@@ -54,4 +54,10 @@ export default abstract class TaskController {
       return res.status(400).json({ error: 'Task not found' });
     }
   }
+  static async delete(req: Request, res: Response): Promise<Response> {
+    const { task_id } = req.params;
+    const task = await TaskModel.findOneAndDelete({ _id: task_id });
+
+    return res.json(task);
+  }
 }
