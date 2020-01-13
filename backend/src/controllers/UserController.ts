@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import UserModel from '../models/User';
 
 export default abstract class UserController {
-  public static async store(req: Request, res: Response): Promise<Response> {
+  static async store(req: Request, res: Response): Promise<Response> {
     try {
       const { name, email, password } = req.body;
       let user = await UserModel.findOne({ email });

@@ -15,10 +15,12 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  tasks: {
-    type: Schema.Types.ObjectId,
-    ref: 'Task',
-  },
+  tasks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Task',
+    },
+  ],
 });
 
 UserSchema.pre('save', async function(this: any, next) {

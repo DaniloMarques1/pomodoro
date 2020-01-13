@@ -5,7 +5,7 @@ import UserPayload from '../interfaces/UserPayload';
 import Utils from '../utils/util';
 
 export default abstract class SessionController {
-  public static async store(req: Request, res: Response): Promise<Response> {
+  static async store(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
     if (!user) {
