@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tomato from '../../assets/tomato.png';
 import {
   Container,
@@ -11,12 +11,29 @@ import {
   SignUpButton,
 } from './styles';
 import Colors from '../../styles/colors';
+import http from '../../services/http';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = useState('');
+  const tEmail = navigation.getParam('email');
+  const [email, setEmail] = useState(tEmail ? tEmail : '');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {};
+  useEffect(() => {
+    async function checkToken() {
+      const token = await AsyncStorage.getItem('token');
+      if (token) navigation.navigate('Home');
+    }
+    checkToken();
+  }, []);
+
+  const handleSubmit = async () => {
+    const response = await http.post('/session', {
+      email,
+      password,
+    });
+    await AsyncStorage.setItem('token', response.data.token);
+  };
 
   return (
     <Container>

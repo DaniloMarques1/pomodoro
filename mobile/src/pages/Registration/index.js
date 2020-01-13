@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ToastAndroid } from 'react-native';
+import http from '../../services/http';
 import {
   Container,
   ImageLogo,
@@ -20,11 +21,21 @@ export default function Registration({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = values => {
+  const handleSubmit = async () => {
     if (!(name && email, password, confirmPassword))
       setErrorMessage('Fill in all fields');
-    if (password !== confirmPassword)
+    else if (password !== confirmPassword)
       setErrorMessage('Password does not match');
+    else {
+      try {
+        const response = await http.post('/users', {
+          name,
+          email,
+          password,
+        });
+        navigation.navigate('Login', { email: email });
+      } catch (e) {}
+    }
   };
 
   return (
@@ -42,6 +53,7 @@ export default function Registration({ navigation }) {
         placeholderTextColor={Colors.grayColor}
         value={email}
         onChangeText={setEmail}
+        autoCapitalize="none"
       />
       <Input
         placeholder="Your password"
@@ -49,6 +61,7 @@ export default function Registration({ navigation }) {
         value={password}
         secureTextEntry={true}
         onChangeText={setPassword}
+        autoCapitalize="none"
       />
       <Input
         placeholder="Confirm password"
@@ -56,6 +69,7 @@ export default function Registration({ navigation }) {
         value={confirmPassword}
         secureTextEntry={true}
         onChangeText={setConfirmPassword}
+        autoCapitalize="none"
       />
       <Button onPress={handleSubmit}>
         <ButtonText>Sign up</ButtonText>
