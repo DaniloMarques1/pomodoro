@@ -6,5 +6,4 @@
 
 ## TODO:
 
-- Autenticacao do usuario
-  - Criar um token para o usuario
+- Cadastrar uma task referente a um usuario

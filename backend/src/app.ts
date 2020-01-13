@@ -1,5 +1,4 @@
-import { config } from 'dotenv';
-config();
+import Config from './config/config';
 import express, { Application } from 'express';
 import routes from './routes';
 import mongoose from 'mongoose';
@@ -13,7 +12,7 @@ class App {
   }
 
   public bootstrap(): void {
-    this.express.listen(process.env.PORT);
+    this.express.listen(Config.PORT);
   }
 
   public middlewares(): void {
@@ -21,7 +20,7 @@ class App {
     this.express.use(routes);
   }
   public database(): void {
-    mongoose.connect(<string>process.env.DATABASE_DEV_URI, {
+    mongoose.connect(<string>Config.MONGO_DEV_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
