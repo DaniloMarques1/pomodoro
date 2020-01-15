@@ -3,13 +3,17 @@ import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Home from './pages/Home';
 
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Login,
-      Registration,
-      Home,
-    },
-    { backBehavior: 'initialRoute' }
-  )
-);
+export default function Routes(initialRoute) {
+  return createAppContainer(
+    createSwitchNavigator(
+      {
+        Login,
+        Home,
+        Registration,
+      },
+      {
+        initialRouteName: initialRoute,
+      }
+    )
+  );
+}

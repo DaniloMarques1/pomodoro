@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 
 export const Container = styled.View`
@@ -19,3 +19,9 @@ export const Title = styled.Text`
 export const ImageLogo = styled.Image`
   margin-left: auto;
 `;
+
+export const Menu = styled.View`
+  flex: 1;
+  justify-content: flex-end;
+`;
+export const MenuText = styled.Text``;

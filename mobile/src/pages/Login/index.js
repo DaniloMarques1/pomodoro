@@ -19,13 +19,13 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState(tEmail ? tEmail : '');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    async function checkToken() {
-      const token = await AsyncStorage.getItem('token');
-      if (token) navigation.navigate('Home');
-    }
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   async function checkToken() {
+  //     const token = await AsyncStorage.getItem('token');
+  //     if (token) navigation.navigate('Home');
+  //   }
+  //   checkToken();
+  // }, []);
 
   const handleSubmit = async () => {
     const response = await http.post('/session', {
@@ -33,6 +33,7 @@ export default function Login({ navigation }) {
       password,
     });
     await AsyncStorage.setItem('token', response.data.token);
+    navigation.navigate('Home');
   };
 
   return (
@@ -40,12 +41,14 @@ export default function Login({ navigation }) {
       <ImageLogo source={Tomato} />
       <Input
         placeholder="Your email"
+        autoCapitalize="none"
         placeholderTextColor={Colors.grayColor}
         value={email}
         onChangeText={setEmail}
       />
       <Input
         placeholder="Your password"
+        autoCapitalize="none"
         placeholderTextColor={Colors.grayColor}
         value={password}
         secureTextEntry={true}
