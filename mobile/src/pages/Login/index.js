@@ -13,56 +13,67 @@ import {
 import Colors from '../../styles/colors';
 import http from '../../services/http';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loading from '../../components/Loading';
+import { ToastAndroid } from 'react-native';
 
 export default function Login({ navigation }) {
   const tEmail = navigation.getParam('email');
   const [email, setEmail] = useState(tEmail ? tEmail : '');
   const [password, setPassword] = useState('');
-
-  // useEffect(() => {
-  //   async function checkToken() {
-  //     const token = await AsyncStorage.getItem('token');
-  //     if (token) navigation.navigate('Home');
-  //   }
-  //   checkToken();
-  // }, []);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    const response = await http.post('/session', {
-      email,
-      password,
-    });
-    await AsyncStorage.setItem('token', response.data.token);
-    navigation.navigate('Home');
+    setLoading(true);
+    try {
+      const response = await http.post('/session', {
+        email,
+        password,
+      });
+      await AsyncStorage.setItem('token', response.data.token);
+      setLoading(false);
+      navigation.navigate('Home');
+    } catch (e) {
+      setLoading(false);
+      if (e.response)
+        ToastAndroid.show(e.response.data.error, ToastAndroid.LONG);
+      else
+        ToastAndroid.show(
+          'An error has occurred. Check your internet connection and try again',
+          ToastAndroid.LONG
+        );
+    }
   };
 
   return (
-    <Container>
-      <ImageLogo source={Tomato} />
-      <Input
-        placeholder="Your email"
-        autoCapitalize="none"
-        placeholderTextColor={Colors.grayColor}
-        value={email}
-        onChangeText={setEmail}
-      />
-      <Input
-        placeholder="Your password"
-        autoCapitalize="none"
-        placeholderTextColor={Colors.grayColor}
-        value={password}
-        secureTextEntry={true}
-        onChangeText={setPassword}
-      />
-      <Button onPress={handleSubmit}>
-        <ButtonText>Login</ButtonText>
-      </Button>
+    <>
+      <Container>
+        <ImageLogo source={Tomato} />
+        <Input
+          placeholder="Your email"
+          autoCapitalize="none"
+          placeholderTextColor={Colors.grayColor}
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Input
+          placeholder="Your password"
+          autoCapitalize="none"
+          placeholderTextColor={Colors.grayColor}
+          value={password}
+          secureTextEntry={true}
+          onChangeText={setPassword}
+        />
+        <Button onPress={handleSubmit}>
+          <ButtonText>Login</ButtonText>
+        </Button>
 
-      <SignUpButton onPress={() => navigation.navigate('Registration')}>
-        <TextView>
-          Don't have an account? <BoldTextView>Sign up!</BoldTextView>
-        </TextView>
-      </SignUpButton>
-    </Container>
+        <SignUpButton onPress={() => navigation.navigate('Registration')}>
+          <TextView>
+            Don't have an account? <BoldTextView>Sign up!</BoldTextView>
+          </TextView>
+        </SignUpButton>
+      </Container>
+      {loading && <Loading />}
+    </>
   );
 }

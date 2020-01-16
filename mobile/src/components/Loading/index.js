@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Container, LoadingContainer, Title, Loader } from './styles';
+import { Container, LoadingContainer } from './styles';
 import { ActivityIndicator } from 'react-native';
 import Colors from '../../styles/colors';
-export default function Loading({ open }) {
+export default function Loading() {
   return (
     <Container>
       <LoadingContainer>
