@@ -24,12 +24,6 @@ const UserSchema = new Schema({
   ],
 });
 
-UserSchema.pre('save', async function(this: any, next) {
-  const hash = await bcrypt.hash(this.password, 10);
-  this.password = hash;
-  next();
-});
-
 const UserModel = model<UserInterface>('User', UserSchema);
 
 export default UserModel;

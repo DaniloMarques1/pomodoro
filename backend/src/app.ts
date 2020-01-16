@@ -15,11 +15,11 @@ class App {
     this.express.listen(Config.PORT);
   }
 
-  public middlewares(): void {
+  middlewares(): void {
     this.express.use(express.json());
     this.express.use(routes);
   }
-  public database(): void {
+  database(): void {
     mongoose.connect(<string>Config.MONGO_DEV_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,

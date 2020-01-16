@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import UserModel from '../models/User';
-import bcrypt from 'bcrypt';
 import Utils from '../utils/util';
 
 export default abstract class UserController {
@@ -9,11 +8,11 @@ export default abstract class UserController {
       const { name, email, password } = req.body;
       let user = await UserModel.findOne({ email });
       if (user) return res.status(400).json({ error: 'Email already used' });
-
+      const hash = await Utils.getPassword(password);
       user = await UserModel.create({
         name,
         email,
-        password,
+        password: hash,
       });
       return res.status(201).json(user);
     } catch (e) {
@@ -25,13 +24,22 @@ export default abstract class UserController {
     const { currentPassword, newPassword } = req.body;
     const payload = Utils.getUserFromToken(<string>token);
     const user = await UserModel.findById(payload.id);
-    const match = await bcrypt.compare(currentPassword, <string>user?.password);
-    if (match && user) {
-      user.password = newPassword;
-      await user.save();
-      return res.status(200).json(user);
+    if (!user)
+      return res
+        .status(400)
+        .json({ error: 'Unexcpeted error, try log in again' });
+    else {
+      const match = await Utils.comparePassword(
+        currentPassword,
+        <string>user?.password
+      );
+      if (match) {
+        const hash = await Utils.getPassword(newPassword);
+        user.password = hash;
+        await user.save();
+        return res.status(200).json(user);
+      }
+      return res.status(401).json({ error: 'Password does not match' });
     }
-
-    return res.status(401).json({ error: 'Password does not match' });
   }
 }
