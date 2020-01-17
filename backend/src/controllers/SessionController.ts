@@ -20,7 +20,7 @@ export default abstract class SessionController {
         tasks: user.tasks,
       };
       const token = Utils.getToken(payload);
-      return res.json({ token: token });
+      return res.status(201).json({ token: token });
     }
     return res.status(401).json({ error: 'Password incorrect' });
   }
