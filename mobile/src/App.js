@@ -21,7 +21,6 @@ export default function App() {
   const Component = Routes(initialRoute);
   return (
     <>
-      {console.log(Component)}
       <Component />
     </>
   );

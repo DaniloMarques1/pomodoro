@@ -5,7 +5,7 @@ import Colors from '../../styles/colors';
 //   contentContainerStyle: {},
 // })``;
 export const Container = styled.View`
-  flex: 1;
+  flex-grow: 1;
   justify-content: flex-end;
 `;
 

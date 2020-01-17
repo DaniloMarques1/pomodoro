@@ -4,9 +4,10 @@ import Colors from '../../styles/colors';
 export const Container = styled.View`
   flex: 1;
   background-color: ${Colors.primaryColor};
+  justify-content: flex-end;
 `;
 export const Header = styled.View`
-  margin: 40px 20px;
+  margin: 10px 20px 0 20px;
   flex-direction: row;
 `;
 
@@ -17,11 +18,21 @@ export const Title = styled.Text`
   margin: 30px 20px;
 `;
 export const ImageLogo = styled.Image`
+  margin-top: 10px;
   margin-left: auto;
 `;
 
-export const Menu = styled.View`
-  flex: 1;
-  justify-content: flex-end;
+export const Body = styled.View``;
+
+export const List = styled.FlatList`
+  z-index: 2;
+  position: relative;
 `;
-export const MenuText = styled.Text``;
+
+export const Empty = styled.Text`
+  font-size: 22px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 100px;
+`;
