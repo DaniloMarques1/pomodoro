@@ -3,6 +3,7 @@ import Colors from '../../styles/colors';
 export const Container = styled.View`
   flex: 1;
   background-color: ${Colors.primaryColor};
+  justify-content: center;
 `;
 export const HeaderContainer = styled.View`
   margin-top: 50px;

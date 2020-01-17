@@ -10,11 +10,11 @@ import CardTask from '../../components/CardTask';
 
 export default function Home({ navigation }) {
   const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [emptyTasksMessage, setEmptyTasksMessage] = useState('');
   useEffect(() => {
-    setLoading(true);
     async function getTasks() {
+      // setLoading(true);
       const token = await AsyncStorage.getItem('token');
       try {
         const response = await http.get('/tasks', {
@@ -61,7 +61,7 @@ export default function Home({ navigation }) {
         )}
         <Menu />
       </Container>
-      {loading && <Loading />}
+      {loading ? <Loading /> : null}
     </>
   );
 }
