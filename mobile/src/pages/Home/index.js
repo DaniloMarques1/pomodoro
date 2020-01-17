@@ -38,10 +38,6 @@ export default function Home({ navigation }) {
     getTasks();
   }, []);
 
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem('token');
-    navigation.navigate('Login');
-  };
   return (
     <>
       <Container>
@@ -63,7 +59,7 @@ export default function Home({ navigation }) {
             keyExtractor={item => item._id}
           />
         )}
-        <Menu handleLogout={handleLogout} />
+        <Menu />
       </Container>
       {loading && <Loading />}
     </>

@@ -2,26 +2,36 @@ import React, { useState } from 'react';
 import MenuItem from '../MenuItem';
 import { Container, MenuContainer, MenuScroll, MenuButton } from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
+import { withNavigation } from 'react-navigation';
 
-export default function Menu({ handleLogout }) {
+function Menu({ navigation }) {
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token');
+    navigation.navigate('Login');
+  };
+
   return (
-    <Container>
-      <MenuContainer>
-        <MenuScroll>
-          <MenuButton>
-            <MenuItem active={true} text={'Home'} icon="home" />
-          </MenuButton>
-          <MenuButton>
-            <MenuItem text={'Profile'} icon="person" />
-          </MenuButton>
-          <MenuButton>
-            <MenuItem text={'Add'} icon="control-point" />
-          </MenuButton>
-          <MenuButton onPress={handleLogout}>
-            <MenuItem text={'Log out'} icon="exit-to-app" />
-          </MenuButton>
-        </MenuScroll>
-      </MenuContainer>
-    </Container>
+    <>
+      <Container>
+        <MenuContainer>
+          <MenuScroll>
+            <MenuButton onPress={() => navigation.navigate('Home')}>
+              <MenuItem active={true} text={'Home'} icon="home" />
+            </MenuButton>
+            <MenuButton onPress={() => navigation.navigate('Profile')}>
+              <MenuItem text={'Profile'} icon="person" />
+            </MenuButton>
+            <MenuButton>
+              <MenuItem text={'Add'} icon="control-point" />
+            </MenuButton>
+            <MenuButton onPress={handleLogout}>
+              <MenuItem text={'Log out'} icon="exit-to-app" />
+            </MenuButton>
+          </MenuScroll>
+        </MenuContainer>
+      </Container>
+    </>
   );
 }
+
+export default withNavigation(Menu);
