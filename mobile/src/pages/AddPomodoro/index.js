@@ -14,7 +14,6 @@ import {
 } from './styles';
 import Loading from '../../components/Loading';
 import Colors from '../../styles/colors';
-import AsyncStorage from '@react-native-community/async-storage';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -30,7 +29,11 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
       if (!(title && qtd))
         ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
       else {
+        setLoading(true);
         await addPomodoroRequest(title, qtd);
+        setTitle('');
+        setQtd('');
+        setLoading(false);
       }
     }
     addPomodoro();
@@ -43,7 +46,7 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
         <Header>
           <Title>Create a new Pomodoro</Title>
           <CloseButton onPress={handleClose}>
-            <CloseButtonText onClick={handleClose}>X</CloseButtonText>
+            <CloseButtonText>X</CloseButtonText>
           </CloseButton>
         </Header>
         <Body>

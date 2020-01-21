@@ -1,5 +1,6 @@
 export const GET_POMODOROS_REQUEST = 'GET_POMODOROS_REQUEST';
 export const GET_POMODOROS = 'GET_POMODOROS';
+export const SIGN_OUT = 'SIGN_OUT';
 
 export const ADD_POMODORO_REQUEST = 'ADD_POMODORO_REQUEST';
 export const ADD_POMODORO = 'ADD_POMODORO';
@@ -13,3 +14,5 @@ export const addPomodoroRequest = (title, qtdPomodoros) => ({
   qtdPomodoros,
 });
 export const addPomodoro = data => ({ type: ADD_POMODORO, data });
+
+export const signOut = () => ({ type: SIGN_OUT });

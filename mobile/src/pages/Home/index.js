@@ -57,7 +57,7 @@ function Home({ navigation, tasks, getPomodorosRequest }) {
         )}
         <Menu handleOpen={handleOpen} />
       </Container>
-      {loading ? <Loading /> : null}
+      {tasks.title === null ? <Loading /> : null}
       <AddPomodoro openAdd={openAdd} handleClose={handleClose} />
     </>
   );
