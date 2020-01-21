@@ -1,4 +1,4 @@
-import { GET_POMODOROS } from './action';
+import { GET_POMODOROS, ADD_POMODORO } from './action';
 
 const INITIAL_STATE = {
   tasks: [
@@ -24,6 +24,8 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
     case GET_POMODOROS:
       state = data;
       return state;
+    case ADD_POMODORO:
+      return {...state, tasks: [...state.tasks, data]};
     default:
       return state;
   }

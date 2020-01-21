@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 
-import pomodoroSaga from './pomodoro/saga';
+import getPomodoros from './pomodoro/saga/getPomodoros';
 
 export default function* rootSaga() {
-  return yield all([pomodoroSaga]);
+  return yield all([getPomodoros]);
 }
