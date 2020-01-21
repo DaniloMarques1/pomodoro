@@ -25,10 +25,10 @@ function Home({ navigation, tasks, getPomodorosRequest }) {
         setLoading(false);
       } catch (e) {
         seteLoading(false);
-        console.log('Error');
         navigation.navigate('Login');
       }
     }
+
     getTasks();
   }, []);
 

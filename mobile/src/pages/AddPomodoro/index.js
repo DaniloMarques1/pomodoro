@@ -13,33 +13,27 @@ import {
   CloseButtonText,
 } from './styles';
 import Loading from '../../components/Loading';
-import http from '../../services/http';
 import Colors from '../../styles/colors';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as PomodoroActions from '../../store/modules/pomodoro/action';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { ToastAndroid } from 'react-native';
 
-function AddPomodoro({ openAdd, handleClose }) {
+function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
   const [title, setTitle] = useState('');
   const [qtd, setQtd] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleCreate = async () => {
-    setLoading(true);
-    try {
-      const token = await AsyncStorage.getItem('token');
-      const response = await http.post(
-        'tasks',
-        {
-          title,
-          qtdPomodoros: qtd,
-        },
-        {
-          headers: {
-            token,
-          },
-        }
-      );
-      setLoading(false);
-    } catch (e) {}
+    async function addPomodoro() {
+      if (!(title && qtd))
+        ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
+      else {
+        await addPomodoroRequest(title, qtd);
+      }
+    }
+    addPomodoro();
   };
 
   if (!openAdd) return null;
@@ -77,4 +71,7 @@ function AddPomodoro({ openAdd, handleClose }) {
   );
 }
 
-export default AddPomodoro;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PomodoroActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(AddPomodoro);

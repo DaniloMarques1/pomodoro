@@ -6,7 +6,6 @@ import { GET_POMODOROS_REQUEST, getPomodoros } from '../action';
 function* doRequest() {
   try {
     const data = yield call(getTasks);
-    console.log(data);
     yield put(getPomodoros(data));
   } catch (e) {}
 }
