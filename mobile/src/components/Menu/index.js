@@ -4,7 +4,7 @@ import { Container, MenuContainer, MenuScroll, MenuButton } from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { withNavigation } from 'react-navigation';
 
-function Menu({ navigation }) {
+function Menu({ navigation, handleOpen }) {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
     navigation.navigate('Login');
@@ -21,7 +21,7 @@ function Menu({ navigation }) {
             <MenuButton onPress={() => navigation.navigate('Profile')}>
               <MenuItem text={'Profile'} icon="person" />
             </MenuButton>
-            <MenuButton>
+            <MenuButton onPress={handleOpen}>
               <MenuItem text={'Add'} icon="control-point" />
             </MenuButton>
             <MenuButton onPress={handleLogout}>

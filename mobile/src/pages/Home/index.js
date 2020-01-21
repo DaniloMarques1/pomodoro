@@ -7,11 +7,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Loading from '../../components/Loading';
 import http from '../../services/http';
 import CardTask from '../../components/CardTask';
+import AddPomodoro from '../AddPomodoro';
 
 export default function Home({ navigation }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [emptyTasksMessage, setEmptyTasksMessage] = useState('');
+  const [openAdd, setOpenAdd] = useState(false);
+
+  const handleClose = () => setOpenAdd(false);
+  const handleOpen = () => setOpenAdd(true);
+
   useEffect(() => {
     async function getTasks() {
       const token = await AsyncStorage.getItem('token');
@@ -57,9 +63,10 @@ export default function Home({ navigation }) {
             keyExtractor={item => item._id}
           />
         )}
-        <Menu />
+        <Menu handleOpen={handleOpen} />
       </Container>
       {loading ? <Loading /> : null}
+      <AddPomodoro openAdd={openAdd} handleClose={handleClose} />
     </>
   );
 }
