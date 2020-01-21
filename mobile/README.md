@@ -8,6 +8,5 @@ Layout do app feito no figma
 ## TODO:
 
 - Adicao do redux-saga no projeto
-- Tela para criacao das tasks(pomodoros)
 - Tela com o cronometro para as tasks
 - Funcionalidade do botao de deletar
