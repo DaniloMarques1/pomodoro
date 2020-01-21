@@ -7,7 +7,7 @@ export const Container = styled.View`
   justify-content: flex-end;
 `;
 export const Header = styled.View`
-  margin: 10px 20px 0 20px;
+  margin: 0 10px 0 20px;
   flex-direction: row;
 `;
 

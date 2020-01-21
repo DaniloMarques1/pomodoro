@@ -14,7 +14,6 @@ export default function Home({ navigation }) {
   const [emptyTasksMessage, setEmptyTasksMessage] = useState('');
   useEffect(() => {
     async function getTasks() {
-      // setLoading(true);
       const token = await AsyncStorage.getItem('token');
       try {
         const response = await http.get('/tasks', {
@@ -23,7 +22,6 @@ export default function Home({ navigation }) {
           },
         });
         setTasks(response.data.tasks);
-        console.log(response.data.tasks);
         if (tasks.length === 0)
           setEmptyTasksMessage(
             'You have no tasks, add one by clicking the add button'

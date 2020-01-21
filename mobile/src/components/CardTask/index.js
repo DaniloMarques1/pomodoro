@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../styles/colors';
 import {
@@ -13,10 +13,6 @@ import {
 } from './styles';
 
 export default function CardTask({ title, pomodoros }) {
-  useEffect(() => {
-    console.log(title, pomodoros);
-  }, []);
-
   return (
     <Container>
       <Header>
