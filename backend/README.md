@@ -18,3 +18,8 @@ Um usuario apos o login podera criar uma nova tarefa e atribuir um numero de pom
 - POST /tasks - Cria uma nova taks
 - GET /tasks - Retorna todas as tasks do usuario do token enviado
 - PUT /tasks/task_id - Atualiza a task do id passado
+
+## TODO:
+
+- Criar validacao do body na criacao de tasks
+- Validar o body da criacao de um usuario
