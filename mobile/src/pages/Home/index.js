@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { Container, Title, Header, ImageLogo, Empty, List } from './styles';
 import Tomato from '../../assets/tomato_mini.png';
 import Menu from '../../components/Menu';
-import AsyncStorage from '@react-native-community/async-storage';
 import Loading from '../../components/Loading';
-import http from '../../services/http';
 import CardTask from '../../components/CardTask';
 import AddPomodoro from '../AddPomodoro';
 
-export default function Home({ navigation }) {
-  const [tasks, setTasks] = useState([]);
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PomodoroActions from '../../store/modules/pomodoro/action';
+
+function Home({ navigation, tasks, getPomodorosRequest }) {
   const [loading, setLoading] = useState(true);
-  const [emptyTasksMessage, setEmptyTasksMessage] = useState('');
   const [openAdd, setOpenAdd] = useState(false);
 
   const handleClose = () => setOpenAdd(false);
@@ -20,22 +20,12 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     async function getTasks() {
-      const token = await AsyncStorage.getItem('token');
       try {
-        const response = await http.get('/tasks', {
-          headers: {
-            token: token,
-          },
-        });
-        setTasks(response.data.tasks);
-        if (tasks.length === 0)
-          setEmptyTasksMessage(
-            'You have no tasks, add one by clicking the add button'
-          );
+        await getPomodorosRequest();
         setLoading(false);
       } catch (e) {
-        setLoading(false);
-        await AsyncStorage.removeItem('token');
+        seteLoading(false);
+        console.log('Error');
         navigation.navigate('Login');
       }
     }
@@ -49,8 +39,10 @@ export default function Home({ navigation }) {
           <Title>Tasks</Title>
           <ImageLogo source={Tomato} />
         </Header>
-        {tasks.length === 0 ? (
-          <Empty>{emptyTasksMessage}</Empty>
+        {tasks.length === 0 || tasks[0].title === null ? (
+          <Empty>
+            You have no tasks yet, add one by clicking the add button.
+          </Empty>
         ) : (
           <List
             data={tasks}
@@ -70,3 +62,12 @@ export default function Home({ navigation }) {
     </>
   );
 }
+
+const mapStateToProps = state => ({
+  tasks: state.reducer.tasks,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PomodoroActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

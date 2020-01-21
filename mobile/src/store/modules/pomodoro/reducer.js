@@ -23,7 +23,7 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
   switch (type) {
     case GET_POMODOROS:
       state = data;
-      return stata;
+      return state;
     default:
       return state;
   }
