@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Routes from './routes';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Provider } from 'react-redux';
+import store from './store';
 
 export default function App() {
   const [initialRoute, setInitialRoute] = useState('');
@@ -21,7 +23,9 @@ export default function App() {
   const Component = Routes(initialRoute);
   return (
     <>
-      <Component />
+      <Provider store={store}>
+        <Component />
+      </Provider>
     </>
   );
 }
