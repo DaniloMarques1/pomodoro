@@ -11,37 +11,21 @@ import {
   SignUpButton,
 } from './styles';
 import Colors from '../../styles/colors';
-import http from '../../services/http';
-import AsyncStorage from '@react-native-community/async-storage';
 import Loading from '../../components/Loading';
-import { ToastAndroid } from 'react-native';
+import { connect } from 'react-redux';
+import * as SignActions from '../../store/modules/auth/action';
+import { bindActionCreators } from 'redux';
 
-export default function Login({ navigation }) {
+function Login({ navigation, signInRequest, loading }) {
   const tEmail = navigation.getParam('email');
   const [email, setEmail] = useState(tEmail ? tEmail : '');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    setLoading(true);
     try {
-      const response = await http.post('/session', {
-        email,
-        password,
-      });
-      await AsyncStorage.setItem('token', response.data.token);
-      setLoading(false);
+      await signInRequest(email, password);
       navigation.navigate('Home');
-    } catch (e) {
-      setLoading(false);
-      if (e.response)
-        ToastAndroid.show(e.response.data.error, ToastAndroid.LONG);
-      else
-        ToastAndroid.show(
-          'An error has occurred. Check your internet connection and try again',
-          ToastAndroid.LONG
-        );
-    }
+    } catch (e) {}
   };
 
   return (
@@ -77,3 +61,12 @@ export default function Login({ navigation }) {
     </>
   );
 }
+
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SignActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

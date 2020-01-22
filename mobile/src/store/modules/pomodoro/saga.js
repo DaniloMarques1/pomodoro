@@ -16,23 +16,23 @@ import {
   deletePomodoro,
 } from './action';
 
-function* requestAdd({ title, qtdPomodoros }) {
+function* requestAdd({ title, qtdPomodoros, token }) {
   try {
-    const data = yield call(addTask, title, qtdPomodoros);
+    const data = yield call(addTask, title, qtdPomodoros, token);
     return yield put(addPomodoro(data));
   } catch (e) {}
 }
 
-function* requestPomodoros() {
+function* requestPomodoros({ token }) {
   try {
-    const data = yield call(getTasks);
+    const data = yield call(getTasks, token);
     yield put(getPomodoros(data));
   } catch (e) {}
 }
 
-function* requestDelete({ pomodoroId }) {
+function* requestDelete({ pomodoroId, token }) {
   try {
-    const data = yield call(deletePomodoroRequest, pomodoroId);
+    const data = yield call(deletePomodoroRequest, pomodoroId, token);
     return yield put(deletePomodoro(data));
   } catch (e) {
     let txt;

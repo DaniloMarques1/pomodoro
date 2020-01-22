@@ -19,7 +19,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ToastAndroid } from 'react-native';
 
-function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
+function AddPomodoro({ openAdd, handleClose, addPomodoroRequest, token }) {
   const [title, setTitle] = useState('');
   const [qtd, setQtd] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
         ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
       else {
         setLoading(true);
-        await addPomodoroRequest(title, qtd);
+        await addPomodoroRequest(title, qtd, token);
         setTitle('');
         setQtd('');
         setLoading(false);
@@ -73,8 +73,10 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
     </Container>
   );
 }
-
+const mapStateToProps = state => ({
+  token: state.auth.token,
+});
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(AddPomodoro);
+export default connect(mapStateToProps, mapDispatchToProps)(AddPomodoro);

@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 
-function Home({ navigation, tasks, getPomodorosRequest, loading }) {
+function Home({ navigation, tasks, getPomodorosRequest, loading, token }) {
   const [openAdd, setOpenAdd] = useState(false);
 
   const handleClose = () => setOpenAdd(false);
@@ -20,7 +20,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
   useEffect(() => {
     async function getTasks() {
       try {
-        await getPomodorosRequest();
+        await getPomodorosRequest(token);
       } catch (e) {
         navigation.navigate('Login');
       }
@@ -63,6 +63,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
 const mapStateToProps = state => ({
   tasks: state.pomodoro.tasks,
   loading: state.pomodoro.loading,
+  token: state.auth.token,
 });
 
 const mapDispatchToProps = dispatch =>

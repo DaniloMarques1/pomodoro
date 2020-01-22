@@ -16,7 +16,13 @@ import { connect } from 'react-redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { bindActionCreators } from 'redux';
 
-function CardTask({ pomodoroId, title, pomodoros, deletePomodoroRequest }) {
+function CardTask({
+  pomodoroId,
+  title,
+  pomodoros,
+  deletePomodoroRequest,
+  token,
+}) {
   const handleDelete = () => {
     Alert.alert('Delete task...', 'You want to delete the task?', [
       null,
@@ -26,7 +32,7 @@ function CardTask({ pomodoroId, title, pomodoros, deletePomodoroRequest }) {
   };
 
   async function deleTask() {
-    await deletePomodoroRequest(pomodoroId);
+    await deletePomodoroRequest(pomodoroId, token);
   }
 
   return (
@@ -55,6 +61,7 @@ function CardTask({ pomodoroId, title, pomodoros, deletePomodoroRequest }) {
 
 const mapStateToProps = state => ({
   loading: state.pomodoro.loading,
+  token: state.auth.token,
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
