@@ -57,14 +57,14 @@ function Home({ navigation, tasks, getPomodorosRequest }) {
         )}
         <Menu handleOpen={handleOpen} />
       </Container>
-      {tasks.title === null ? <Loading /> : null}
+      {loading ? <Loading /> : null}
       <AddPomodoro openAdd={openAdd} handleClose={handleClose} />
     </>
   );
 }
 
 const mapStateToProps = state => ({
-  tasks: state.reducer.tasks,
+  tasks: state.pomodoro.tasks,
 });
 
 const mapDispatchToProps = dispatch =>

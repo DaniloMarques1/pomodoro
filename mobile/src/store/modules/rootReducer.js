@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux';
-import reducer from './pomodoro/reducer';
+import pomodoro from './pomodoro/reducer';
 
-export default combineReducers({ reducer });
+export default combineReducers({ pomodoro });

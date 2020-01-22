@@ -13,12 +13,7 @@ export default abstract class SessionController {
     }
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      const payload: UserPayload = {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        tasks: user.tasks,
-      };
+      const payload: UserPayload = { id: user._id };
       const token = Utils.getToken(payload);
       return res.status(201).json({ token: token });
     }

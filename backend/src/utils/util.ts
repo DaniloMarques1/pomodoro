@@ -2,9 +2,10 @@ import jsonwebtoken from 'jsonwebtoken';
 import UserPayload from '../interfaces/UserPayload';
 import Config from '../config/config';
 import bcrypt from 'bcrypt';
+
 export default abstract class Utils {
   static getToken(payload: UserPayload): string {
-    const token = jsonwebtoken.sign(payload, <string>Config.JwtKey);
+      const token = jsonwebtoken.sign(payload, <string>Config.JwtKey);
     return token;
   }
   static getUserFromToken(token: string): UserPayload {
