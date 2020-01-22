@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../styles/colors';
 import {
@@ -16,13 +16,7 @@ import { connect } from 'react-redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { bindActionCreators } from 'redux';
 
-function CardTask({
-  pomodoroId,
-  title,
-  pomodoros,
-  setLoading,
-  deletePomodoroRequest,
-}) {
+function CardTask({ pomodoroId, title, pomodoros, deletePomodoroRequest }) {
   const handleDelete = () => {
     Alert.alert('Delete task...', 'You want to delete the task?', [
       null,
@@ -32,9 +26,7 @@ function CardTask({
   };
 
   async function deleTask() {
-    setLoading(true);
     await deletePomodoroRequest(pomodoroId);
-    setLoading(false);
   }
 
   return (
@@ -60,7 +52,11 @@ function CardTask({
     </>
   );
 }
+
+const mapStateToProps = state => ({
+  loading: state.pomodoro.loading,
+});
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(CardTask);
+export default connect(mapStateToProps, mapDispatchToProps)(CardTask);

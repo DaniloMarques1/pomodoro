@@ -11,8 +11,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 
-function Home({ navigation, tasks, getPomodorosRequest }) {
-  const [loading, setLoading] = useState(true);
+function Home({ navigation, tasks, getPomodorosRequest, loading }) {
   const [openAdd, setOpenAdd] = useState(false);
 
   const handleClose = () => setOpenAdd(false);
@@ -22,13 +21,10 @@ function Home({ navigation, tasks, getPomodorosRequest }) {
     async function getTasks() {
       try {
         await getPomodorosRequest();
-        setLoading(false);
       } catch (e) {
-        seteLoading(false);
         navigation.navigate('Login');
       }
     }
-
     getTasks();
   }, []);
 
@@ -51,8 +47,6 @@ function Home({ navigation, tasks, getPomodorosRequest }) {
                 title={item.title}
                 pomodoros={`${item.finishedPomodoros}/${item.qtdPomodoros}`}
                 pomodoroId={item._id}
-                loading={loading}
-                setLoading={setLoading}
               />
             )}
             keyExtractor={item => item._id}
@@ -68,6 +62,7 @@ function Home({ navigation, tasks, getPomodorosRequest }) {
 
 const mapStateToProps = state => ({
   tasks: state.pomodoro.tasks,
+  loading: state.pomodoro.loading,
 });
 
 const mapDispatchToProps = dispatch =>
