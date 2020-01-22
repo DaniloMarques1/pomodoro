@@ -50,6 +50,9 @@ function Home({ navigation, tasks, getPomodorosRequest }) {
               <CardTask
                 title={item.title}
                 pomodoros={`${item.finishedPomodoros}/${item.qtdPomodoros}`}
+                pomodoroId={item._id}
+                loading={loading}
+                setLoading={setLoading}
               />
             )}
             keyExtractor={item => item._id}

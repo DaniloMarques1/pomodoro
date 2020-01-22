@@ -7,6 +7,6 @@ Layout do app feito no figma
 
 ## TODO:
 
-- Adicao do redux-saga no projeto
 - Tela com o cronometro para as tasks
 - Funcionalidade do botao de deletar
+- Adicionar a autenticacao no redux

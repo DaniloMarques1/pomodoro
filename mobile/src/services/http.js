@@ -38,6 +38,21 @@ async function addTask(title, qtdPomodoros) {
     throw e;
   }
 }
-export { getTasks, addTask };
+
+async function deletePomodoroRequest(pomodoroId) {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await http.delete(`/tasks/${pomodoroId}`, {
+      headers: {
+        token: token,
+      },
+    });
+    return response.data;
+  } catch (e) {
+    throw e;
+  }
+}
+
+export { getTasks, addTask, deletePomodoroRequest };
 
 export default http;

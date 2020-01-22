@@ -1,4 +1,9 @@
-import { GET_POMODOROS, ADD_POMODORO, SIGN_OUT } from './action';
+import {
+  GET_POMODOROS,
+  ADD_POMODORO,
+  SIGN_OUT,
+  DELETE_POMODORO,
+} from './action';
 
 const INITIAL_STATE = {
   tasks: [
@@ -29,6 +34,13 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
       return state;
     case SIGN_OUT:
       state = INITIAL_STATE;
+      return state;
+    case DELETE_POMODORO:
+      const nState = {
+        ...state,
+        tasks: state.tasks.filter(task => task._id !== data._id),
+      };
+      state = nState;
       return state;
     default:
       return state;
