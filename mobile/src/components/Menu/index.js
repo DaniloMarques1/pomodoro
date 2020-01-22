@@ -3,10 +3,14 @@ import MenuItem from '../MenuItem';
 import { Container, MenuContainer, MenuScroll, MenuButton } from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+import * as PomodoroActions from '../../store/modules/pomodoro/action';
+import { bindActionCreators } from 'redux';
 
-function Menu({ navigation, handleOpen }) {
+function Menu({ navigation, handleOpen, signOut }) {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
+    signOut();
     navigation.navigate('Login');
   };
 
@@ -34,4 +38,7 @@ function Menu({ navigation, handleOpen }) {
   );
 }
 
-export default withNavigation(Menu);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PomodoroActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(withNavigation(Menu));
