@@ -8,5 +8,4 @@ Layout do app feito no figma
 ## TODO:
 
 - Tela com o cronometro para as tasks
-- Funcionalidade do botao de deletar
 - Adicionar a autenticacao no redux
