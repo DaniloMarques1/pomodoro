@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Provider } from 'react-redux';
 import store from './store';
 import { StatusBar } from 'react-native';
+import Colors from './styles/colors';
 
 export default function App() {
   const [initialRoute, setInitialRoute] = useState('');
@@ -25,7 +26,7 @@ export default function App() {
   return (
     <>
       <Provider store={store}>
-        <StatusBar backgroundColor="#FF6347" />
+        <StatusBar backgroundColor={Colors.primaryColor} />
         <Component />
       </Provider>
     </>
