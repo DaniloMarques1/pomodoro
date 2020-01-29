@@ -15,13 +15,14 @@ import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { bindActionCreators } from 'redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 function CardTask({
   pomodoroId,
   title,
   pomodoros,
   deletePomodoroRequest,
-  token,
+  handlePlay,
 }) {
   const handleDelete = () => {
     Alert.alert('Delete task...', 'You want to delete the task?', [
@@ -32,7 +33,7 @@ function CardTask({
   };
 
   async function deleTask() {
-    await deletePomodoroRequest(pomodoroId, token);
+    await deletePomodoroRequest(pomodoroId);
   }
 
   return (
@@ -47,7 +48,8 @@ function CardTask({
           </PomodorosView>
         </Header>
         <Body>
-          <IconButton>
+          <IconButton
+            onPress={() => handlePlay({ title, pomodoros, pomodoroId })}>
             <Icon name="play-arrow" size={30} color={Colors.primaryColor} />
           </IconButton>
           <IconButton onPress={handleDelete}>
@@ -61,9 +63,11 @@ function CardTask({
 
 const mapStateToProps = state => ({
   loading: state.pomodoro.loading,
-  token: state.auth.token,
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardTask);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardTask);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Container,
@@ -18,22 +18,22 @@ import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ToastAndroid } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
-function AddPomodoro({ openAdd, handleClose, addPomodoroRequest, token }) {
+function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
   const [title, setTitle] = useState('');
   const [qtd, setQtd] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const handleCreate = async () => {
     async function addPomodoro() {
+      handleClose();
+      const token = await AsyncStorage.getItem('token');
       if (!(title && qtd))
         ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
       else {
-        setLoading(true);
         await addPomodoroRequest(title, qtd, token);
         setTitle('');
         setQtd('');
-        setLoading(false);
       }
     }
     addPomodoro();
@@ -69,14 +69,14 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest, token }) {
           </Button>
         </Body>
       </ContentContainer>
-      {loading && <Loading />}
     </Container>
   );
 }
-const mapStateToProps = state => ({
-  token: state.auth.token,
-});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddPomodoro);
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddPomodoro);

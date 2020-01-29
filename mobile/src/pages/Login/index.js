@@ -12,20 +12,37 @@ import {
 } from './styles';
 import Colors from '../../styles/colors';
 import Loading from '../../components/Loading';
-import { connect } from 'react-redux';
-import * as SignActions from '../../store/modules/auth/action';
-import { bindActionCreators } from 'redux';
+import { ToastAndroid } from 'react-native';
+import http from '../../services/http';
+import AsyncStorage from '@react-native-community/async-storage';
 
-function Login({ navigation, signInRequest, loading }) {
-  const tEmail = navigation.getParam('email');
+function Login({ navigation }) {
+  const tEmail = navigation.getParam('email') || 'arthur@gmail.com';
   const [email, setEmail] = useState(tEmail ? tEmail : '');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('arthur');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
-      await signInRequest(email, password);
+      const response = await http.post('/session', {
+        email,
+        password,
+      });
+      setLoading(false);
+      const token = response.data.token;
+      await AsyncStorage.setItem('token', token);
       navigation.navigate('Home');
-    } catch (e) {}
+    } catch (e) {
+      setLoading(false);
+      if (e.response)
+        ToastAndroid.show(e.response.data.error, ToastAndroid.LONG);
+      else
+        ToastAndroid.show(
+          'An error has occurred. Check your internet connection and try again',
+          ToastAndroid.LONG
+        );
+    }
   };
 
   return (
@@ -61,12 +78,4 @@ function Login({ navigation, signInRequest, loading }) {
     </>
   );
 }
-
-const mapStateToProps = state => ({
-  loading: state.auth.loading,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(SignActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

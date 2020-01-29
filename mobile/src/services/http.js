@@ -1,9 +1,9 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
 import { ToastAndroid } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const http = axios.create({
-  baseURL: 'http://192.168.1.7:5000',
+  baseURL: 'http://192.168.1.4:5000',
 });
 
 async function createSession(email, password) {
@@ -57,8 +57,9 @@ async function addTask(title, qtdPomodoros, token) {
   }
 }
 
-async function deletePomodoroRequest(pomodoroId, token) {
+async function deletePomodoroRequest(pomodoroId) {
   try {
+    const token = await AsyncStorage.getItem('token');
     const response = await http.delete(`/tasks/${pomodoroId}`, {
       headers: {
         token: token,

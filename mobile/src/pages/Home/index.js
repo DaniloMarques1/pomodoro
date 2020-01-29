@@ -5,20 +5,25 @@ import Tomato from '../../assets/tomato_mini.png';
 import Menu from '../../components/Menu';
 import Loading from '../../components/Loading';
 import CardTask from '../../components/CardTask';
+import Timer from '../../components/Timer';
 import AddPomodoro from '../AddPomodoro';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 
-function Home({ navigation, tasks, getPomodorosRequest, loading, token }) {
+function Home({ navigation, tasks, getPomodorosRequest, loading }) {
   const [openAdd, setOpenAdd] = useState(false);
+  const [currentTask, setCurrentTask] = useState({});
+  const [openPlay, setOpenPlay] = useState(false);
 
   const handleClose = () => setOpenAdd(false);
   const handleOpen = () => setOpenAdd(true);
 
   useEffect(() => {
+    console.log({ loading });
     async function getTasks() {
+      const token = await AsyncStorage.getItem('token');
       try {
         await getPomodorosRequest(token);
       } catch (e) {
@@ -27,6 +32,12 @@ function Home({ navigation, tasks, getPomodorosRequest, loading, token }) {
     }
     getTasks();
   }, []);
+
+  const handleClosePlay = () => setOpenPlay(false);
+  const handlePlay = task => {
+    setOpenPlay(true);
+    setCurrentTask(task);
+  };
 
   return (
     <>
@@ -47,6 +58,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading, token }) {
                 title={item.title}
                 pomodoros={`${item.finishedPomodoros}/${item.qtdPomodoros}`}
                 pomodoroId={item._id}
+                handlePlay={handlePlay}
               />
             )}
             keyExtractor={item => item._id}
@@ -55,6 +67,11 @@ function Home({ navigation, tasks, getPomodorosRequest, loading, token }) {
         <Menu handleOpen={handleOpen} />
       </Container>
       {loading ? <Loading /> : null}
+      <Timer
+        task={currentTask}
+        openPlay={openPlay}
+        handleClosePlay={handleClosePlay}
+      />
       <AddPomodoro openAdd={openAdd} handleClose={handleClose} />
     </>
   );
@@ -63,10 +80,12 @@ function Home({ navigation, tasks, getPomodorosRequest, loading, token }) {
 const mapStateToProps = state => ({
   tasks: state.pomodoro.tasks,
   loading: state.pomodoro.loading,
-  token: state.auth.token,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
