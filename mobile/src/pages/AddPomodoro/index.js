@@ -54,6 +54,7 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
             placeholder="Task title"
             autoCapitalize="none"
             placeholderTextColor={Colors.grayColor}
+            maxLength={50}
             value={title}
             onChangeText={setTitle}
           />
