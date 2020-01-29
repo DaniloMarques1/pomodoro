@@ -3,7 +3,11 @@ import TaskInterface from '../interfaces/Task';
 
 const TaskSchema = new Schema(
   {
-    title: String,
+    title: {
+      type: String,
+      required: true,
+      maxlength: 50,
+    },
     qtdPomodoros: Number,
     finishedPomodoros: Number,
     active: Boolean,
