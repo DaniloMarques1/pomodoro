@@ -26,7 +26,7 @@ export const CloseButton = styled.TouchableOpacity`
 
 export const CloseButtonText = styled.Text`
   color: ${Colors.grayColor};
-  font-size: 19px;
+  font-size: 23px;
   align-self: flex-end;
   font-weight: bold;
 `;
