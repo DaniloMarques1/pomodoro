@@ -5,6 +5,7 @@ import {
   addTask,
   getTasks,
   deletePomodoroRequest,
+  doUpdatePomodoro,
 } from '../../../services/http.js';
 
 import {
@@ -14,6 +15,8 @@ import {
   getPomodoros,
   DELETE_POMODORO_REQUEST,
   deletePomodoro,
+  UPDATE_POMODORO_REQUEST,
+  updatePomodoro,
 } from './action';
 
 function* requestAdd({ title, qtdPomodoros, token }) {
@@ -49,8 +52,18 @@ function* requestDelete({ pomodoroId, token }) {
   }
 }
 
+function* requestUpdate({ pomodoroId, token }) {
+  console.log('saga: ', { pomodoroId, token });
+  try {
+    const data = yield call(doUpdatePomodoro, pomodoroId, token);
+    console.log('saga', { data });
+    return yield put(updatePomodoro(data));
+  } catch (e) {}
+}
+
 export default all([
   takeLatest(ADD_POMODORO_REQUEST, requestAdd),
   takeLatest(GET_POMODOROS_REQUEST, requestPomodoros),
   takeLatest(DELETE_POMODORO_REQUEST, requestDelete),
+  takeLatest(UPDATE_POMODORO_REQUEST, requestUpdate),
 ]);

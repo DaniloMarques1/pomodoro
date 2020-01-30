@@ -37,7 +37,7 @@ async function addTask(title, qtdPomodoros, token) {
   }
 }
 
-async function deletePomodoroRequest(pomodoroId) {
+async function deletePomodoroRequest(pomodoroId, token) {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await http.delete(`/tasks/${pomodoroId}`, {
@@ -51,6 +51,20 @@ async function deletePomodoroRequest(pomodoroId) {
   }
 }
 
-export { getTasks, addTask, deletePomodoroRequest };
+async function doUpdatePomodoro(pomodoroId, token) {
+  console.log('http: ', { pomodoroId, token });
+  try {
+    const response = await http.put(`tasks/${pomodoroId}`, null, {
+      headers: {
+        token,
+      },
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export { getTasks, addTask, deletePomodoroRequest, doUpdatePomodoro };
 
 export default http;

@@ -5,6 +5,7 @@ import {
   SIGN_OUT,
   DELETE_POMODORO,
   DELETE_POMODORO_REQUEST,
+  UPDATE_POMODORO,
 } from './action';
 
 const INITIAL_STATE = {
@@ -51,6 +52,18 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
       };
       state = nState;
       state.loading = false;
+      return state;
+    case UPDATE_POMODORO:
+      const updatedTasks = state.tasks
+        .map(task => {
+          if (task._id === data._id) {
+            return data;
+          } else {
+            return task;
+          }
+        })
+        .filter(task => task.active !== false);
+      state = { ...state, tasks: updatedTasks };
       return state;
     default:
       return state;

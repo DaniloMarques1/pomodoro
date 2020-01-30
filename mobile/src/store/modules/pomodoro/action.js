@@ -5,6 +5,8 @@ export const DELETE_POMODORO = 'DELETE_POMODORO';
 export const SIGN_OUT = 'SIGN_OUT';
 export const ADD_POMODORO_REQUEST = 'ADD_POMODORO_REQUEST';
 export const ADD_POMODORO = 'ADD_POMODORO';
+export const UPDATE_POMODORO_REQUEST = 'UPDATE_POMODORO_REQUEST';
+export const UPDATE_POMODORO = 'UPDATE_POMODORO';
 
 export const getPomodorosRequest = token => ({
   type: GET_POMODOROS_REQUEST,
@@ -27,3 +29,11 @@ export const deletePomodoroRequest = pomodoroId => ({
 export const deletePomodoro = data => ({ type: DELETE_POMODORO, data });
 
 export const signOut = () => ({ type: SIGN_OUT });
+
+export const updatePomodoroRequest = (pomodoroId, token) => ({
+  type: UPDATE_POMODORO_REQUEST,
+  pomodoroId,
+  token,
+});
+
+export const updatePomodoro = data => ({ type: UPDATE_POMODORO, data });

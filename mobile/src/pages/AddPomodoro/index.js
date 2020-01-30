@@ -52,6 +52,7 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
         <Body>
           <Input
             placeholder="Task title"
+            autoFocus={true}
             autoCapitalize="none"
             placeholderTextColor={Colors.grayColor}
             maxLength={50}

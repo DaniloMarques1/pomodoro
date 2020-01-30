@@ -14,20 +14,29 @@ import {
 } from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../styles/colors';
+import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PomodoroActions from '../../store/modules/pomodoro/action';
 
-const DEFAULT_TIMER = { minute: 2, second: 0 };
+const DEFAULT_TIMER = { minute: 1, second: 0 };
 
-export default function Timer({ task, openPlay, handleClosePlay }) {
+function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
   const [time, setTime] = useState(DEFAULT_TIMER);
   const [iconName, setIconName] = useState('play-arrow');
   const [clockRunning, setClockRunning] = useState(false);
   const [finished, setFinished] = useState(false);
 
   useEffect(() => {
+    async function updateTask() {
+      const token = await AsyncStorage.getItem('token');
+      console.log('update', { token });
+      await updatePomodoroRequest(task.pomodoroId, token);
+    }
+
     if (finished) {
       setFinished(false);
-      //TODO: request to update task
-      console.log('finished');
+      updateTask();
     }
   }, [finished]);
 
@@ -46,8 +55,8 @@ export default function Timer({ task, openPlay, handleClosePlay }) {
         setFinished(true);
         setClockRunning(false);
         setTime(DEFAULT_TIMER);
-        handleClosePlay();
         setIconName('play-arrow');
+        handleClosePlay();
       }
     }
   }, [clockRunning, time]);
@@ -86,3 +95,11 @@ export default function Timer({ task, openPlay, handleClosePlay }) {
     </Container>
   );
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PomodoroActions, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Timer);
