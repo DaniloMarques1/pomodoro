@@ -12,6 +12,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 
+function HeaderHome() {
+  return (
+    <Header>
+      <Title>Tasks</Title>
+      <ImageLogo source={Tomato} />
+    </Header>
+  );
+}
+
 function Home({ navigation, tasks, getPomodorosRequest, loading }) {
   const [openAdd, setOpenAdd] = useState(false);
   const [currentTask, setCurrentTask] = useState({});
@@ -21,7 +30,6 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
   const handleOpen = () => setOpenAdd(true);
 
   useEffect(() => {
-    console.log({ loading });
     async function getTasks() {
       const token = await AsyncStorage.getItem('token');
       try {
@@ -39,20 +47,23 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
     setCurrentTask(task);
   };
 
+  const handleScroll = () => {
+    console.log('scroll');
+  };
+
   return (
     <>
       <Container>
-        <Header>
-          <Title>Tasks</Title>
-          <ImageLogo source={Tomato} />
-        </Header>
         {tasks.length === 0 || tasks[0].title === null ? (
           <Empty>
             You have no tasks yet, add one by clicking the add button.
           </Empty>
         ) : (
           <List
+            onScrollBeginDrag={handleScroll}
             data={tasks}
+            ListHeaderComponent={HeaderHome}
+            scrollEventThrottle={36}
             renderItem={({ item }) => (
               <CardTask
                 title={item.title}
