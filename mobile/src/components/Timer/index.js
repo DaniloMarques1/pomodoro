@@ -15,12 +15,42 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../styles/colors';
 
-const DEFAULT_TIMER = { minute: 25, second: 0 };
+const DEFAULT_TIMER = { minute: 2, second: 0 };
 
 export default function Timer({ task, openPlay, handleClosePlay }) {
   const [time, setTime] = useState(DEFAULT_TIMER);
   const [iconName, setIconName] = useState('play-arrow');
   const [clockRunning, setClockRunning] = useState(false);
+  const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    if (finished) {
+      setFinished(false);
+      //TODO: request to update task
+      console.log('finished');
+    }
+  }, [finished]);
+
+  useEffect(() => {
+    if (clockRunning) {
+      if (time.minute !== 0 || time.second !== 0) {
+        const intervalId = setInterval(() => {
+          setTime(prevState => ({
+            minute:
+              prevState.second === 0 ? prevState.minute - 1 : prevState.minute,
+            second: prevState.second === 0 ? 59 : prevState.second - 1,
+          }));
+        }, 100);
+        return () => clearInterval(intervalId);
+      } else {
+        setFinished(true);
+        setClockRunning(false);
+        setTime(DEFAULT_TIMER);
+        handleClosePlay();
+        setIconName('play-arrow');
+      }
+    }
+  }, [clockRunning, time]);
 
   if (!openPlay) return null;
 
