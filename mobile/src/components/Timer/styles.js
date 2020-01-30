@@ -53,3 +53,4 @@ export const Time = styled.Text`
   font-size: 55px;
   margin-bottom: 20px;
 `;
+export const PlayPauseButton = styled.TouchableOpacity``;

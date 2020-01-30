@@ -47,10 +47,6 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
     setCurrentTask(task);
   };
 
-  const handleScroll = () => {
-    console.log('scroll');
-  };
-
   return (
     <>
       <Container>
@@ -60,10 +56,8 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
           </Empty>
         ) : (
           <List
-            onScrollBeginDrag={handleScroll}
-            data={tasks}
             ListHeaderComponent={HeaderHome}
-            scrollEventThrottle={36}
+            data={tasks}
             renderItem={({ item }) => (
               <CardTask
                 title={item.title}

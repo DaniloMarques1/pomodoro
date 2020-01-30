@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const http = axios.create({
-  baseURL: 'http://192.168.1.4:5000',
+  baseURL: 'http://192.168.1.3:5000',
 });
 
 async function getTasks(token) {

@@ -50,7 +50,7 @@ function CardTask({
         <Body>
           <IconButton
             onPress={() => handlePlay({ title, pomodoros, pomodoroId })}>
-            <Icon name="play-arrow" size={30} color={Colors.primaryColor} />
+            <Icon name="details" size={25} color={Colors.primaryColor} />
           </IconButton>
           <IconButton onPress={handleDelete}>
             <Icon name="delete" size={25} color={Colors.primaryColor} />
