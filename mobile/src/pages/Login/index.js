@@ -17,9 +17,9 @@ import http from '../../services/http';
 import AsyncStorage from '@react-native-community/async-storage';
 
 function Login({ navigation }) {
-  const tEmail = navigation.getParam('email') || 'arthur@gmail.com';
+  const tEmail = navigation.getParam('email') || '';
   const [email, setEmail] = useState(tEmail ? tEmail : '');
-  const [password, setPassword] = useState('arthur');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
