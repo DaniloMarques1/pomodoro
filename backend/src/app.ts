@@ -23,7 +23,7 @@ class App {
     this.express.use(routes);
   }
   database(): void {
-    mongoose.connect(<string>Config.MONGO_DEV_URI, {
+    mongoose.connect(<string>Config.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
