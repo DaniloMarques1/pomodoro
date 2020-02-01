@@ -1,1 +1,2 @@
+web: tsc
 web: yarn start
