@@ -7,7 +7,7 @@
     "dev": "nodemon src/dist/server.js",
     "start": "node src/dist/server.js",
     "build": "tsc",
-    "heroku-postbuild": "ng build --prod"
+    "heroku-postbuild": "yarn build --prod"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
