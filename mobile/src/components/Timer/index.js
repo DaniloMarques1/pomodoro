@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 
-const DEFAULT_TIMER = { minute: 1, second: 0 };
+const DEFAULT_TIMER = { minute: 25, second: 0 };
 
 function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
   const [time, setTime] = useState(DEFAULT_TIMER);
@@ -49,7 +49,7 @@ function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
               prevState.second === 0 ? prevState.minute - 1 : prevState.minute,
             second: prevState.second === 0 ? 59 : prevState.second - 1,
           }));
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       } else {
         setFinished(true);
