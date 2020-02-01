@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/dist/server.js",
-    "start": "node src/dist/server.js"
+    "start": "node src/dist/server.js",
+    "build": "tsc",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
