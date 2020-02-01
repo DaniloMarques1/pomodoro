@@ -18,8 +18,11 @@ import http from '../../services/http';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loading from '../../components/Loading';
 import { ToastAndroid } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PomodoroActions from '../../store/modules/pomodoro/action';
 
-export default function Profile({ navigation }) {
+function Profile({ navigation, name }) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -57,7 +60,7 @@ export default function Profile({ navigation }) {
     <Container>
       <HeaderContainer>
         <Logo source={Tomato} />
-        <Title>Hello, Danilo</Title>
+        <Title>Hello, {name}</Title>
       </HeaderContainer>
       <Body>
         <FormTitle>Change your password</FormTitle>
@@ -88,3 +91,12 @@ export default function Profile({ navigation }) {
     </Container>
   );
 }
+
+const mapStateToProps = state => ({
+  name: state.pomodoro.name,
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(Profile);

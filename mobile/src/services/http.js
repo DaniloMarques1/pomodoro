@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const http = axios.create({
-  baseURL: 'http://192.168.1.3:5000',
+  baseURL: 'http://192.168.1.5:5000',
 });
 
 async function getTasks(token) {
@@ -52,7 +52,6 @@ async function deletePomodoroRequest(pomodoroId, token) {
 }
 
 async function doUpdatePomodoro(pomodoroId, token) {
-  console.log('http: ', { pomodoroId, token });
   try {
     const response = await http.put(`tasks/${pomodoroId}`, null, {
       headers: {

@@ -2,6 +2,8 @@ import Config from './config/config';
 import express, { Application } from 'express';
 import routes from './routes';
 import mongoose from 'mongoose';
+import httpStatus from './middleware/httpStatus';
+
 class App {
   private express: Application;
 
@@ -17,6 +19,7 @@ class App {
 
   middlewares(): void {
     this.express.use(express.json());
+    this.express.use(httpStatus);
     this.express.use(routes);
   }
   database(): void {

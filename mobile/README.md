@@ -7,5 +7,5 @@ Layout do app feito no figma
 
 ## TODO:
 
-- Tela com o cronometro para as tasks
-- Adicionar a autenticacao no redux
+- Passar o token do componente para o saga onde e necessario
+- analisar comportamento de erro de conexao.
