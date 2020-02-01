@@ -3,6 +3,7 @@ import express, { Application } from 'express';
 import routes from './routes';
 import mongoose from 'mongoose';
 import httpStatus from './middleware/httpStatus';
+import cors from 'cors';
 
 class App {
   private express: Application;
@@ -18,12 +19,13 @@ class App {
   }
 
   middlewares(): void {
+    this.express.use(cors());
     this.express.use(express.json());
     this.express.use(httpStatus);
     this.express.use(routes);
   }
   database(): void {
-    mongoose.connect(<string>Config.MONGO_DEV_URI, {
+    mongoose.connect(<string>Config.DATABASE_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
