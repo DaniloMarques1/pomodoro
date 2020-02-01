@@ -61,6 +61,11 @@ function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
     }
   }, [clockRunning, time]);
 
+  const handleClose = () => {
+    setTime(DEFAULT_TIMER);
+    handleClosePlay();
+  };
+
   if (!openPlay) return null;
 
   const formatTime = () =>
@@ -79,7 +84,7 @@ function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
     <Container>
       <TimerContainer>
         <Header>
-          <CloseButton onPress={handleClosePlay}>
+          <CloseButton onPress={handleClose}>
             <CloseButtonText>X</CloseButtonText>
           </CloseButton>
           <TaskTitle numberOfLines={2}>{task.title}</TaskTitle>

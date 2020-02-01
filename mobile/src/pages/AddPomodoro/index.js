@@ -26,7 +26,6 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
 
   const handleCreate = async () => {
     async function addPomodoro() {
-      handleClose();
       const token = await AsyncStorage.getItem('token');
       if (!(title && qtd))
         ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
@@ -34,6 +33,7 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
         await addPomodoroRequest(title, qtd, token);
         setTitle('');
         setQtd('');
+        handleClose();
       }
     }
     addPomodoro();
