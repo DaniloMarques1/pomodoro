@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/dist/server.js",
     "build": "tsc",
-    "start": "yarn build && node src/dist/server.js"
+    "start": "node src/dist/server.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
