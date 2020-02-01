@@ -22,9 +22,10 @@ export const addPomodoroRequest = (title, qtdPomodoros, token) => ({
 });
 export const addPomodoro = data => ({ type: ADD_POMODORO, data });
 
-export const deletePomodoroRequest = pomodoroId => ({
+export const deletePomodoroRequest = (pomodoroId, token) => ({
   type: DELETE_POMODORO_REQUEST,
   pomodoroId,
+  token,
 });
 export const deletePomodoro = data => ({ type: DELETE_POMODORO, data });
 

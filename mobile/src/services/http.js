@@ -39,7 +39,6 @@ async function addTask(title, qtdPomodoros, token) {
 
 async function deletePomodoroRequest(pomodoroId, token) {
   try {
-    const token = await AsyncStorage.getItem('token');
     const response = await http.delete(`/tasks/${pomodoroId}`, {
       headers: {
         token: token,

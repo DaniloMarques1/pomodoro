@@ -33,7 +33,9 @@ function CardTask({
   };
 
   async function deleTask() {
-    await deletePomodoroRequest(pomodoroId);
+    const token = await AsyncStorage.getItem('token');
+    console.log('cardtask', { token });
+    await deletePomodoroRequest(pomodoroId, token);
   }
 
   return (

@@ -7,5 +7,4 @@ Layout do app feito no figma
 
 ## TODO:
 
-- Passar o token do componente para o saga onde e necessario
 - analisar comportamento de erro de conexao.
