@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import {
   Container,
   TimerContainer,
@@ -18,8 +17,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
+import Sound from 'react-native-sound';
+Sound.setCategory('Playback');
 
-const DEFAULT_TIMER = { minute: 25, second: 0 };
+const DEFAULT_TIMER = { minute: 1, second: 0 };
 
 function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
   const [time, setTime] = useState(DEFAULT_TIMER);
@@ -35,6 +36,10 @@ function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
     }
 
     if (finished) {
+      const bell = new Sound('whoosh.mp3', Sound.MAIN_BUNDLE);
+      // const bell = new Player('../../assets/bell.mp3');
+      console.log({ bell });
+      bell.play();
       setFinished(false);
       updateTask();
     }
@@ -49,7 +54,7 @@ function Timer({ task, openPlay, handleClosePlay, updatePomodoroRequest }) {
               prevState.second === 0 ? prevState.minute - 1 : prevState.minute,
             second: prevState.second === 0 ? 59 : prevState.second - 1,
           }));
-        }, 1000);
+        }, 100);
         return () => clearInterval(intervalId);
       } else {
         setFinished(true);
