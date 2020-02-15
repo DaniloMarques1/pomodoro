@@ -2,7 +2,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const http = axios.create({
-  baseURL: 'http://192.168.1.5:5000',
+  // baseURL: 'http://192.168.1.5:5000',
+  baseURL: 'https://pomodoroapi.herokuapp.com',
 });
 
 async function getTasks(token) {

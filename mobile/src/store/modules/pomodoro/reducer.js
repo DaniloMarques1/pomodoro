@@ -31,28 +31,22 @@ const INITIAL_STATE = {
 export default function pomodoro(state = INITIAL_STATE, { type, data }) {
   switch (type) {
     case GET_POMODOROS_REQUEST:
-      state.loading = true;
-      return state;
+      return { ...state, loading: true };
     case GET_POMODOROS:
-      state = data;
-      state.loading = false;
-      return state;
+      return { ...data, loading: false };
     case ADD_POMODORO:
       state = { ...state, tasks: [data, ...state.tasks] };
       return state;
     case SIGN_OUT:
       state = INITIAL_STATE;
     case DELETE_POMODORO_REQUEST:
-      state.loading = true;
-      return state;
+      return { ...state, loading: true };
     case DELETE_POMODORO:
       const nState = {
         ...state,
         tasks: state.tasks.filter(task => task._id !== data._id),
       };
-      state = nState;
-      state.loading = false;
-      return state;
+      return { ...nState, loading: false };
     case UPDATE_POMODORO:
       const updatedTasks = state.tasks
         .map(task => {
