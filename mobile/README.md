@@ -7,4 +7,6 @@ Layout do app feito no figma
 
 ## TODO:
 
-- analisar comportamento de erro de conexao.
+- Adicionar botao de resete de task
+- Melhorar o botao de close no timer da task
+- Adicionar audio ao finalizar uma task
