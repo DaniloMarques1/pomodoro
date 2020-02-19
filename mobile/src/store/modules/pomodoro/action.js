@@ -7,6 +7,7 @@ export const ADD_POMODORO_REQUEST = 'ADD_POMODORO_REQUEST';
 export const ADD_POMODORO = 'ADD_POMODORO';
 export const UPDATE_POMODORO_REQUEST = 'UPDATE_POMODORO_REQUEST';
 export const UPDATE_POMODORO = 'UPDATE_POMODORO';
+export const ACTIVE_TASK = 'ACTIVE_TASK';
 
 export const getPomodorosRequest = token => ({
   type: GET_POMODOROS_REQUEST,
@@ -38,3 +39,6 @@ export const updatePomodoroRequest = (pomodoroId, token) => ({
 });
 
 export const updatePomodoro = data => ({ type: UPDATE_POMODORO, data });
+
+// quando no icone de detalhes ira receber a task
+export const setActiveTask = data => ({ type: ACTIVE_TASK, data });

@@ -6,6 +6,7 @@ import {
   DELETE_POMODORO,
   DELETE_POMODORO_REQUEST,
   UPDATE_POMODORO,
+  ACTIVE_TASK,
 } from './action';
 
 const INITIAL_STATE = {
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
   password: null,
   __v: null,
   loading: false,
+  activeTask: null,
 };
 
 export default function pomodoro(state = INITIAL_STATE, { type, data }) {
@@ -57,8 +59,10 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
           }
         })
         .filter(task => task.active !== false);
-      state = { ...state, tasks: updatedTasks };
-      return state;
+      return { ...state, tasks: updatedTasks, activeTask: data };
+    case ACTIVE_TASK:
+      console.log({ data });
+      return { ...state, activeTask: data };
     default:
       return state;
   }
