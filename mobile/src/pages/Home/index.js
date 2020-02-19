@@ -21,9 +21,14 @@ function HeaderHome() {
   );
 }
 
-function Home({ navigation, tasks, getPomodorosRequest, loading }) {
+function Home({
+  navigation,
+  tasks,
+  getPomodorosRequest,
+  loading,
+  setActiveTask,
+}) {
   const [openAdd, setOpenAdd] = useState(false);
-  const [currentTask, setCurrentTask] = useState({});
   const [openPlay, setOpenPlay] = useState(false);
 
   const handleClose = () => setOpenAdd(false);
@@ -44,7 +49,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
   const handleClosePlay = () => setOpenPlay(false);
   const handlePlay = task => {
     setOpenPlay(true);
-    setCurrentTask(task);
+    setActiveTask(task);
   };
 
   return (
@@ -61,6 +66,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
             renderItem={({ item }) => (
               <CardTask
                 title={item.title}
+                pomodoro={item}
                 pomodoros={`${item.finishedPomodoros}/${item.qtdPomodoros}`}
                 pomodoroId={item._id}
                 handlePlay={handlePlay}
@@ -72,11 +78,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
         <Menu handleOpen={handleOpen} />
       </Container>
       {loading ? <Loading /> : null}
-      <Timer
-        task={currentTask}
-        openPlay={openPlay}
-        handleClosePlay={handleClosePlay}
-      />
+      <Timer openPlay={openPlay} handleClosePlay={handleClosePlay} />
       <AddPomodoro openAdd={openAdd} handleClose={handleClose} />
     </>
   );
@@ -90,7 +92,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
