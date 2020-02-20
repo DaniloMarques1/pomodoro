@@ -16,7 +16,7 @@ export const ContentContainer = styled.View`
   height: 300px;
   border-radius: 10px;
   background-color: #fff;
-  padding: 20px;
+  padding: 15px;
 `;
 
 export const Header = styled.View`
@@ -59,12 +59,18 @@ export const ButtonText = styled.Text`
 `;
 
 export const CloseButton = styled.TouchableOpacity`
-  margin-left: auto;
+  border: 3px solid ${Colors.primaryColor};
+  align-self: stretch;
+  margin-top: 10px;
+  border-radius: 10px;
+  height: 36px;
 `;
 
 export const CloseButtonText = styled.Text`
   color: ${Colors.grayColor};
-  font-size: 23px;
-  align-self: flex-end;
+  font-size: 20px;
+  align-self: center;
+  font-weight: bold;
+  color: ${Colors.primaryColor};
   font-weight: bold;
 `;

@@ -26,11 +26,11 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest, loading }) {
 
   const handleCreate = async () => {
     async function addPomodoro() {
-      handleClose();
       const token = await AsyncStorage.getItem('token');
       if (!(title && qtd))
         ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
       else {
+        handleClose();
         await addPomodoroRequest(title, qtd, token);
         setTitle('');
         setQtd('');
@@ -45,9 +45,6 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest, loading }) {
       <ContentContainer>
         <Header>
           <Title>Create a new Pomodoro</Title>
-          <CloseButton onPress={handleClose}>
-            <CloseButtonText>X</CloseButtonText>
-          </CloseButton>
         </Header>
         <Body>
           <Input
@@ -69,6 +66,9 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest, loading }) {
           <Button onPress={handleCreate}>
             <ButtonText>Create</ButtonText>
           </Button>
+          <CloseButton onPress={handleClose}>
+            <CloseButtonText>Close</CloseButtonText>
+          </CloseButton>
         </Body>
       </ContentContainer>
       {loading && <Loading />}
