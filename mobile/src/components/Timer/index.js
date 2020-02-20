@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Sound from 'react-native-sound';
+Sound.setCategory('Playback');
 
 import {
   Container,
@@ -21,9 +23,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { ToastAndroid } from 'react-native';
-
-const DEFAULT_TIMER = { minute: 25, second: 0 };
-const DEFAULT_BREAK = { minute: 5, second: 0 };
+const DEFAULT_TIMER = { minute: 2, second: 0 };
+const DEFAULT_BREAK = { minute: 1, second: 0 };
 
 function Timer({
   openPlay,
@@ -62,9 +63,10 @@ function Timer({
               prevState.second === 0 ? prevState.minute - 1 : prevState.minute,
             second: prevState.second === 0 ? 59 : prevState.second - 1,
           }));
-        }, 1000);
+        }, 10);
         return () => clearInterval(intervalId);
       } else {
+        playAudio();
         setFinished(true);
         setClockRunning(false);
         //  breakTime === false indica que estavamos tendo um pomodoro
@@ -92,14 +94,18 @@ function Timer({
   };
 
   function handleReset() {
-    if (clockRunning) {
-      // vai parar o cronometro e resetar o time
-      setClockRunning(false);
-      breakTime ? setTime(DEFAULT_BREAK) : setTime(DEFAULT_TIMER);
-      setIconName('play-arrow');
-    }
+    console.log('opa');
+    // vai parar o cronometro e resetar o time
+    setClockRunning(false);
+    breakTime ? setTime(DEFAULT_BREAK) : setTime(DEFAULT_TIMER);
+    setIconName('play-arrow');
   }
-
+  function playAudio() {
+    const alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE, err => {
+      if (err) console.log('failed to load the audio: ', err);
+      alarm.play();
+    });
+  }
   if (!openPlay) return null;
 
   return (
