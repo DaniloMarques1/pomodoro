@@ -1,6 +1,7 @@
 import {
   GET_POMODOROS,
   GET_POMODOROS_REQUEST,
+  ADD_POMODORO_REQUEST,
   ADD_POMODORO,
   SIGN_OUT,
   DELETE_POMODORO,
@@ -36,8 +37,10 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
       return { ...state, loading: true };
     case GET_POMODOROS:
       return { ...data, loading: false };
+    case ADD_POMODORO_REQUEST:
+      return { ...state, loading: true };
     case ADD_POMODORO:
-      state = { ...state, tasks: [data, ...state.tasks] };
+      state = { ...state, tasks: [data, ...state.tasks], loading: false };
       return state;
     case SIGN_OUT:
       state = INITIAL_STATE;

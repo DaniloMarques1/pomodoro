@@ -16,7 +16,6 @@ export const TimerContainer = styled.View`
   height: 300px;
   margin: 0 10px;
   border-radius: 10px;
-  padding: 10px 15px;
 `;
 export const Header = styled.View``;
 
@@ -26,9 +25,10 @@ export const CloseButton = styled.TouchableOpacity`
 
 export const CloseButtonText = styled.Text`
   color: ${Colors.grayColor};
-  font-size: 23px;
+  font-size: 20px;
   align-self: flex-end;
   font-weight: bold;
+  padding: 10px 14px;
 `;
 export const TaskTitle = styled.Text`
   font-size: 19px;

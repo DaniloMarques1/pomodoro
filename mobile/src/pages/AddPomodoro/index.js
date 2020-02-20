@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import { ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
+function AddPomodoro({ openAdd, handleClose, addPomodoroRequest, loading }) {
   const [title, setTitle] = useState('');
   const [qtd, setQtd] = useState('');
 
@@ -71,14 +71,16 @@ function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
           </Button>
         </Body>
       </ContentContainer>
+      {loading && <Loading />}
     </Container>
   );
 }
 
+const mapStateToProps = state => ({
+  loading: state.pomodoro.loading,
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AddPomodoro);
+export default connect(null, mapDispatchToProps)(AddPomodoro);
