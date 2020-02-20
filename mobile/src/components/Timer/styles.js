@@ -53,4 +53,14 @@ export const Time = styled.Text`
   font-size: 55px;
   margin-bottom: 20px;
 `;
-export const PlayPauseButton = styled.TouchableOpacity``;
+export const PlayPauseButton = styled.TouchableOpacity`
+  margin-right: 20px;
+`;
+
+export const ResetButton = styled.TouchableOpacity`
+  margin-left: 10px;
+`;
+
+export const IconContainer = styled.View`
+  flex-direction: row;
+`;

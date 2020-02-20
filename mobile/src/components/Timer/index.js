@@ -11,6 +11,8 @@ import {
   Body,
   Time,
   PlayPauseButton,
+  IconContainer,
+  ResetButton,
 } from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../styles/colors';
@@ -20,8 +22,8 @@ import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { ToastAndroid } from 'react-native';
 
-const DEFAULT_TIMER = { minute: 25, second: 0 };
-const DEFAULT_BREAK = { minute: 5, second: 0 };
+const DEFAULT_TIMER = { minute: 2, second: 0 };
+const DEFAULT_BREAK = { minute: 1, second: 0 };
 
 function Timer({
   openPlay,
@@ -33,7 +35,7 @@ function Timer({
   const [iconName, setIconName] = useState('play-arrow');
   const [clockRunning, setClockRunning] = useState(false); // indica se o cronometro esta sendo percorrido. UseEffect sera chamado sempre que essa variavel mudar
   const [finished, setFinished] = useState(false); // indica se a task foi finalizada
-  const [breakTime, setBreakTime] = useState(false); // controla se o time deve ser o break ou nao
+  const [breakTime, setBreakTime] = useState(false); // controla se o time deve ser o de break ou nao
 
   useEffect(() => {
     async function updateTask() {
@@ -60,7 +62,7 @@ function Timer({
               prevState.second === 0 ? prevState.minute - 1 : prevState.minute,
             second: prevState.second === 0 ? 59 : prevState.second - 1,
           }));
-        }, 1000);
+        }, 100);
         return () => clearInterval(intervalId);
       } else {
         setFinished(true);
@@ -80,7 +82,6 @@ function Timer({
       .padStart('2', '0')}:${time.second.toString().padStart('2', '0')}`;
 
   const handleStartTimer = () => {
-    //demora pra atualizar ou seja, mesmo ja clicado na linha 34 ainda sera false, devemos forcar
     if (activeTask.active === true || breakTime) {
       setClockRunning(!clockRunning);
       if (!clockRunning) setIconName('pause');
@@ -89,6 +90,15 @@ function Timer({
       ToastAndroid.show('The task was already completed', ToastAndroid.LONG);
     }
   };
+
+  function handleReset() {
+    if (clockRunning) {
+      // vai parar o cronometro e resetar o time
+      setClockRunning(false);
+      breakTime ? setTime(DEFAULT_BREAK) : setTime(DEFAULT_TIMER);
+      setIconName('play-arrow');
+    }
+  }
 
   if (!openPlay) return null;
 
@@ -106,9 +116,18 @@ function Timer({
         </Header>
         <Body>
           <Time>{formatTime()}</Time>
-          <PlayPauseButton onPress={handleStartTimer}>
-            <Icon name={iconName} size={40} color={Colors.primaryColor} />
-          </PlayPauseButton>
+          <IconContainer>
+            <PlayPauseButton onPress={handleStartTimer}>
+              <Icon name={iconName} size={35} color={Colors.primaryColor} />
+            </PlayPauseButton>
+            <ResetButton onPress={handleReset}>
+              <Icon
+                name="settings-backup-restore"
+                size={35}
+                color={Colors.primaryColor}
+              />
+            </ResetButton>
+          </IconContainer>
         </Body>
       </TimerContainer>
     </Container>
