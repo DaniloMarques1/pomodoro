@@ -64,7 +64,6 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
         .filter(task => task.active !== false);
       return { ...state, tasks: updatedTasks, activeTask: data };
     case ACTIVE_TASK:
-      console.log({ data });
       return { ...state, activeTask: data };
     default:
       return state;

@@ -53,10 +53,9 @@ function* requestDelete({ pomodoroId, token }) {
 }
 
 function* requestUpdate({ pomodoroId, token }) {
-  console.log('saga: ', { pomodoroId, token });
   try {
     const data = yield call(doUpdatePomodoro, pomodoroId, token);
-    console.log('saga', { data });
+
     return yield put(updatePomodoro(data));
   } catch (e) {}
 }
