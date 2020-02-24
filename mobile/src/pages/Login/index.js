@@ -54,6 +54,7 @@ function Login({ navigation }) {
           autoCapitalize="none"
           placeholderTextColor={Colors.grayColor}
           value={email}
+          keyboardType="email-address"
           onChangeText={setEmail}
         />
         <Input

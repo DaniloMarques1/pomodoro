@@ -58,6 +58,7 @@ export default function Registration({ navigation }) {
         <Input
           placeholder="Your email"
           placeholderTextColor={Colors.grayColor}
+          keyboardType="email-address"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"

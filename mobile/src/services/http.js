@@ -1,5 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import { ToastAndroid } from 'react-native';
 
 const http = axios.create({
   // baseURL: 'http://192.168.1.5:5000',
@@ -32,6 +33,7 @@ async function addTask(title, qtdPomodoros, token) {
         },
       }
     );
+    ToastAndroid.show('Task created with success', ToastAndroid.LONG);
     return response.data;
   } catch (e) {
     throw e;

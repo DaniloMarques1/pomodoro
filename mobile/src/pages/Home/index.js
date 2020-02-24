@@ -6,7 +6,6 @@ import Menu from '../../components/Menu';
 import Loading from '../../components/Loading';
 import CardTask from '../../components/CardTask';
 import Timer from '../../components/Timer';
-import AddPomodoro from '../AddPomodoro';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -28,11 +27,9 @@ function Home({
   loading,
   setActiveTask,
 }) {
-  const [openAdd, setOpenAdd] = useState(false);
   const [openPlay, setOpenPlay] = useState(false);
 
   const handleClose = () => setOpenAdd(false);
-  const handleOpen = () => setOpenAdd(true);
 
   useEffect(() => {
     async function getTasks() {
@@ -75,11 +72,10 @@ function Home({
             keyExtractor={item => item._id}
           />
         )}
-        <Menu handleOpen={handleOpen} />
+        <Menu />
       </Container>
       {loading ? <Loading /> : null}
       <Timer openPlay={openPlay} handleClosePlay={handleClosePlay} />
-      <AddPomodoro openAdd={openAdd} handleClose={handleClose} />
     </>
   );
 }
@@ -92,4 +88,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

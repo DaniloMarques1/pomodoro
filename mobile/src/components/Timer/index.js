@@ -23,8 +23,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
 import { ToastAndroid } from 'react-native';
-const DEFAULT_TIMER = { minute: 25, second: 0 };
-const DEFAULT_BREAK = { minute: 5, second: 0 };
+const DEFAULT_TIMER = { minute: 2, second: 0 };
+const DEFAULT_BREAK = { minute: 1, second: 0 };
 
 function Timer({
   openPlay,
@@ -63,7 +63,7 @@ function Timer({
               prevState.second === 0 ? prevState.minute - 1 : prevState.minute,
             second: prevState.second === 0 ? 59 : prevState.second - 1,
           }));
-        }, 1000);
+        }, 10);
         return () => clearInterval(intervalId);
       } else {
         playAudio();

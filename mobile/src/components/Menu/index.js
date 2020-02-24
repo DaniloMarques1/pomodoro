@@ -25,7 +25,7 @@ function Menu({ navigation, handleOpen, signOut }) {
             <MenuButton onPress={() => navigation.navigate('Profile')}>
               <MenuItem text={'Profile'} icon="person" />
             </MenuButton>
-            <MenuButton onPress={handleOpen}>
+            <MenuButton onPress={() => navigation.navigate('AddPomodoro')}>
               <MenuItem text={'Add'} icon="control-point" />
             </MenuButton>
             <MenuButton onPress={handleLogout}>
@@ -41,4 +41,7 @@ function Menu({ navigation, handleOpen, signOut }) {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(withNavigation(Menu));
+export default connect(
+  null,
+  mapDispatchToProps
+)(withNavigation(Menu));
