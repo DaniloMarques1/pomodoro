@@ -6,7 +6,6 @@ import Menu from '../../components/Menu';
 import Loading from '../../components/Loading';
 import CardTask from '../../components/CardTask';
 import Timer from '../../components/Timer';
-import AddPomodoro from '../AddPomodoro';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -21,13 +20,16 @@ function HeaderHome() {
   );
 }
 
-function Home({ navigation, tasks, getPomodorosRequest, loading }) {
-  const [openAdd, setOpenAdd] = useState(false);
-  const [currentTask, setCurrentTask] = useState({});
+function Home({
+  navigation,
+  tasks,
+  getPomodorosRequest,
+  loading,
+  setActiveTask,
+}) {
   const [openPlay, setOpenPlay] = useState(false);
 
   const handleClose = () => setOpenAdd(false);
-  const handleOpen = () => setOpenAdd(true);
 
   useEffect(() => {
     async function getTasks() {
@@ -44,7 +46,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
   const handleClosePlay = () => setOpenPlay(false);
   const handlePlay = task => {
     setOpenPlay(true);
-    setCurrentTask(task);
+    setActiveTask(task);
   };
 
   return (
@@ -61,6 +63,7 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
             renderItem={({ item }) => (
               <CardTask
                 title={item.title}
+                pomodoro={item}
                 pomodoros={`${item.finishedPomodoros}/${item.qtdPomodoros}`}
                 pomodoroId={item._id}
                 handlePlay={handlePlay}
@@ -69,15 +72,10 @@ function Home({ navigation, tasks, getPomodorosRequest, loading }) {
             keyExtractor={item => item._id}
           />
         )}
-        <Menu handleOpen={handleOpen} />
+        <Menu />
       </Container>
       {loading ? <Loading /> : null}
-      <Timer
-        task={currentTask}
-        openPlay={openPlay}
-        handleClosePlay={handleClosePlay}
-      />
-      <AddPomodoro openAdd={openAdd} handleClose={handleClose} />
+      <Timer openPlay={openPlay} handleClosePlay={handleClosePlay} />
     </>
   );
 }

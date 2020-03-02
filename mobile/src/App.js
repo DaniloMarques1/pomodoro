@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { StatusBar } from 'react-native';
 import Colors from './styles/colors';
+import KeepAwake from 'react-native-keep-awake';
 
 export default function App() {
   const [initialRoute, setInitialRoute] = useState('');
@@ -28,6 +29,7 @@ export default function App() {
       <Provider store={store}>
         <StatusBar backgroundColor={Colors.primaryColor} />
         <Component />
+        <KeepAwake />
       </Provider>
     </>
   );

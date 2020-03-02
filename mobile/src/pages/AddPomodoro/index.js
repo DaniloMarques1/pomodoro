@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import {
   Container,
-  Title,
-  ContentContainer,
-  Header,
+  HeaderContainer,
   Body,
+  Logo,
+  Title,
+  FormContainer,
   Button,
   ButtonText,
   Input,
-  CloseButton,
-  CloseButtonText,
 } from './styles';
+
+import Tomato from '../../assets/tomato.png';
+import Menu from '../../components/Menu';
+
 import Loading from '../../components/Loading';
 import Colors from '../../styles/colors';
 import * as PomodoroActions from '../../store/modules/pomodoro/action';
@@ -20,65 +23,61 @@ import { connect } from 'react-redux';
 import { ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-function AddPomodoro({ openAdd, handleClose, addPomodoroRequest }) {
+function AddPomodoro({ addPomodoroRequest, loading }) {
   const [title, setTitle] = useState('');
   const [qtd, setQtd] = useState('');
 
-  const handleCreate = async () => {
-    async function addPomodoro() {
-      const token = await AsyncStorage.getItem('token');
-      if (!(title && qtd))
-        ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
-      else {
-        await addPomodoroRequest(title, qtd, token);
-        setTitle('');
-        setQtd('');
-        handleClose();
-      }
+  async function addPomodoro() {
+    const token = await AsyncStorage.getItem('token');
+    if (!(title && qtd))
+      ToastAndroid.show('Fill all fields', ToastAndroid.LONG);
+    else {
+      await addPomodoroRequest(title, qtd, token);
+      setTitle('');
+      setQtd('');
     }
-    addPomodoro();
-  };
+  }
 
-  if (!openAdd) return null;
   return (
     <Container>
-      <ContentContainer>
-        <Header>
-          <Title>Create a new Pomodoro</Title>
-          <CloseButton onPress={handleClose}>
-            <CloseButtonText>X</CloseButtonText>
-          </CloseButton>
-        </Header>
-        <Body>
+      <HeaderContainer>
+        <Logo source={Tomato} />
+        <Title> Add a new Pomodoro</Title>
+      </HeaderContainer>
+      <Body>
+        <FormContainer>
           <Input
             placeholder="Task title"
-            autoFocus={true}
-            autoCapitalize="none"
             placeholderTextColor={Colors.grayColor}
-            maxLength={50}
             value={title}
             onChangeText={setTitle}
           />
           <Input
-            placeholder="Number of pomodoros"
+            placeholder="Task qtd"
             placeholderTextColor={Colors.grayColor}
-            keyboardType="numeric"
             value={qtd}
+            keyboardType="numeric"
             onChangeText={setQtd}
           />
-          <Button onPress={handleCreate}>
+          <Button onPress={addPomodoro}>
             <ButtonText>Create</ButtonText>
           </Button>
-        </Body>
-      </ContentContainer>
+        </FormContainer>
+      </Body>
+      <Menu />
+      {loading && <Loading />}
     </Container>
   );
 }
+
+const mapStateToProps = state => ({
+  loading: state.pomodoro.loading,
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(PomodoroActions, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AddPomodoro);

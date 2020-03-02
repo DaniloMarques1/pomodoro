@@ -2,34 +2,35 @@ import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 
 export const Container = styled.View`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  flex: 1;
+  background-color: ${Colors.primaryColor};
   justify-content: center;
 `;
 
-export const ContentContainer = styled.View`
-  margin: 0 20px;
+export const HeaderContainer = styled.View`
+  margin-top: 50px;
+  align-items: center;
+`;
+
+export const Body = styled.View`
+  background-color: ${Colors.whiteColor};
   height: 300px;
-  border-radius: 10px;
-  background-color: #fff;
+  border-radius: 15px;
+  margin: 20px 30px;
   padding: 20px;
 `;
 
-export const Header = styled.View`
-  flex-direction: row;
-  margin-bottom: 20px;
-`;
-
-export const Body = styled.View``;
+export const Logo = styled.Image``;
 
 export const Title = styled.Text`
+  color: ${Colors.whiteColor}
+  font-size: 18px;
   font-weight: bold;
-  font-size: 15px;
-  color: ${Colors.secondaryColor};
+  margin-top: 20px;
+`;
+
+export const FormContainer = styled.View`
+  margin-top: 40px;
 `;
 
 export const Input = styled.TextInput`
@@ -44,27 +45,14 @@ export const Input = styled.TextInput`
 export const Button = styled.TouchableOpacity`
   background-color: ${Colors.primaryColor};
   align-self: stretch;
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 6px;
   border-radius: 10px;
   height: 46px;
 `;
 
 export const ButtonText = styled.Text`
-  font-weight: bold;
+  color: ${Colors.whiteColor};
   align-self: center;
-  color: #fff;
-  font-size: 18px;
-  margin-top: 5px;
-`;
-
-export const CloseButton = styled.TouchableOpacity`
-  margin-left: auto;
-`;
-
-export const CloseButtonText = styled.Text`
-  color: ${Colors.grayColor};
-  font-size: 23px;
-  align-self: flex-end;
-  font-weight: bold;
+  font-size: 20px;
 `;

@@ -21,6 +21,7 @@ function CardTask({
   pomodoroId,
   title,
   pomodoros,
+  pomodoro,
   deletePomodoroRequest,
   handlePlay,
 }) {
@@ -31,7 +32,6 @@ function CardTask({
       { text: 'Ok', onPress: () => deleTask() },
     ]);
   };
-
   async function deleTask() {
     const token = await AsyncStorage.getItem('token');
     console.log('cardtask', { token });
@@ -43,15 +43,16 @@ function CardTask({
       <Container>
         <Header>
           <TitleView>
-            <Title>{title}</Title>
+            <Title>{pomodoro.title}</Title>
           </TitleView>
           <PomodorosView>
-            <Pomodoros>{pomodoros}</Pomodoros>
+            <Pomodoros>
+              {pomodoro.finishedPomodoros}/{pomodoro.qtdPomodoros}
+            </Pomodoros>
           </PomodorosView>
         </Header>
         <Body>
-          <IconButton
-            onPress={() => handlePlay({ title, pomodoros, pomodoroId })}>
+          <IconButton onPress={() => handlePlay(pomodoro)}>
             <Icon name="details" size={25} color={Colors.primaryColor} />
           </IconButton>
           <IconButton onPress={handleDelete}>

@@ -1,11 +1,13 @@
 import {
   GET_POMODOROS,
   GET_POMODOROS_REQUEST,
+  ADD_POMODORO_REQUEST,
   ADD_POMODORO,
   SIGN_OUT,
   DELETE_POMODORO,
   DELETE_POMODORO_REQUEST,
   UPDATE_POMODORO,
+  ACTIVE_TASK,
 } from './action';
 
 const INITIAL_STATE = {
@@ -26,33 +28,30 @@ const INITIAL_STATE = {
   password: null,
   __v: null,
   loading: false,
+  activeTask: null,
 };
 
 export default function pomodoro(state = INITIAL_STATE, { type, data }) {
   switch (type) {
     case GET_POMODOROS_REQUEST:
-      state.loading = true;
-      return state;
+      return { ...state, loading: true };
     case GET_POMODOROS:
-      state = data;
-      state.loading = false;
-      return state;
+      return { ...data, loading: false };
+    case ADD_POMODORO_REQUEST:
+      return { ...state, loading: true };
     case ADD_POMODORO:
-      state = { ...state, tasks: [data, ...state.tasks] };
+      state = { ...state, tasks: [data, ...state.tasks], loading: false };
       return state;
     case SIGN_OUT:
       state = INITIAL_STATE;
     case DELETE_POMODORO_REQUEST:
-      state.loading = true;
-      return state;
+      return { ...state, loading: true };
     case DELETE_POMODORO:
       const nState = {
         ...state,
         tasks: state.tasks.filter(task => task._id !== data._id),
       };
-      state = nState;
-      state.loading = false;
-      return state;
+      return { ...nState, loading: false };
     case UPDATE_POMODORO:
       const updatedTasks = state.tasks
         .map(task => {
@@ -63,8 +62,9 @@ export default function pomodoro(state = INITIAL_STATE, { type, data }) {
           }
         })
         .filter(task => task.active !== false);
-      state = { ...state, tasks: updatedTasks };
-      return state;
+      return { ...state, tasks: updatedTasks, activeTask: data };
+    case ACTIVE_TASK:
+      return { ...state, activeTask: data };
     default:
       return state;
   }
