@@ -31,8 +31,7 @@ export default abstract class TaskController {
     await user
       ?.populate({
         path: 'tasks',
-        match: { active: true },
-        options: { sort: { createdAt: -1 } },
+        match: { active: true }
       })
       .execPopulate();
 
